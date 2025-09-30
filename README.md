@@ -1,6 +1,6 @@
 ### Hi there, I'm Joseph. 👋
 
-| <img align="center" src="https://github-readme-stats-p41f.vercel.app/api?username=j30e&show_icons=true&include_all_commits=true&theme=transparent&hide_border=true" alt="j3oe's github stats" /> | <img align="center" src="https://github-readme-stats-p41f.vercel.app/api/top-langs/?username=j3oe&layout=compact&theme=transparent&hide_border=true" /> |
+| <img align="center" src="https://github-readme-stats-p41f.vercel.app/api?username=j3oe&show_icons=true&include_all_commits=true&theme=transparent&hide_border=true" alt="j3oe's github stats" /> | <img align="center" src="https://github-readme-stats-p41f.vercel.app/api/top-langs/?username=j3oe&layout=compact&theme=transparent&hide_border=true" /> |
 | ------------- | ------------- |
 
 
