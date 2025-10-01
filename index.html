@@ -86,7 +86,7 @@
     }
 
     function startReloading() {
-      const sec = Math.max(5, Number(document.getElementById("intervalSec").value) || 30);
+    const sec = Math.max(1, Number(document.getElementById("intervalSec").value) || 30);
       loadOnce();
       timer = setInterval(loadOnce, sec * 1000);
       document.getElementById("startBtn").disabled = true;
