@@ -1,5 +1,4 @@
-### Hi there, I'm Joseph. 👋
-<img align="right" src="https://komarev.com/ghpvc/?username=j3oe" alt="joe" />
+### Hi there, I'm Joseph. 👋 <img align="right" src="https://komarev.com/ghpvc/?username=j3oe" alt="joe" />
 
 
 
