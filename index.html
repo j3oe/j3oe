@@ -1,1 +1,94 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Background Reloader</title>
+  <style>
+    body {
+      font-family: system-ui, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background: #111;
+      color: #eee;
+    }
+    .card {
+      padding: 20px;
+      border-radius: 12px;
+      background: #1c1c1c;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.6);
+    }
+    button {
+      margin-right: 10px;
+      padding: 8px 12px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    #status {
+      margin-top: 10px;
+      font-size: 14px;
+      color: #bbb;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div>
+      <button id="startBtn">Start</button>
+      <button id="stopBtn" disabled>Stop</button>
+      <label>
+        Interval (s):
+        <input id="intervalSec" type="number" min="5" step="5" value="60" />
+      </label>
+    </div>
+    <div id="status">Status: idle</div>
+  </div>
 
+  <script>
+    const proxyUrl = "/api/proxy"; // this calls your serverless proxy
+    let timer = null;
+
+    function setStatus(text) {
+      document.getElementById("status").textContent = "Status: " + text;
+    }
+
+    function loadOnce() {
+      const url = proxyUrl + "?cb=" + Date.now();
+      fetch(url)
+        .then(r => {
+          if (!r.ok) throw new Error("HTTP " + r.status);
+          return r.text();
+        })
+        .then(() => {
+          setStatus("last load OK @ " + new Date().toLocaleTimeString());
+        })
+        .catch(err => {
+          setStatus("last load ERROR (" + err.message + ") @ " + new Date().toLocaleTimeString());
+        });
+    }
+
+    function startReloading() {
+      const sec = Math.max(5, Number(document.getElementById("intervalSec").value) || 60);
+      loadOnce();
+      timer = setInterval(loadOnce, sec * 1000);
+      document.getElementById("startBtn").disabled = true;
+      document.getElementById("stopBtn").disabled = false;
+      setStatus("running every " + sec + "s");
+    }
+
+    function stopReloading() {
+      clearInterval(timer);
+      timer = null;
+      document.getElementById("startBtn").disabled = false;
+      document.getElementById("stopBtn").disabled = true;
+      setStatus("stopped");
+    }
+
+    document.getElementById("startBtn").onclick = startReloading;
+    document.getElementById("stopBtn").onclick = stopReloading;
+  </script>
+</body>
+</html>
