@@ -3,52 +3,66 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Background Reloader</title>
+  <title>GitHub Auto Reloader</title>
   <style>
     body {
       font-family: system-ui, sans-serif;
       display: flex;
-      justify-content: center;
+      flex-direction: column;
       align-items: center;
-      height: 100vh;
+      justify-content: flex-start;
+      min-height: 100vh;
+      margin: 0;
       background: #111;
       color: #eee;
-    }
-    .card {
       padding: 20px;
-      border-radius: 12px;
-      background: #1c1c1c;
-      box-shadow: 0 4px 16px rgba(0,0,0,0.6);
+    }
+    .controls {
+      margin-bottom: 12px;
     }
     button {
-      margin-right: 10px;
+      margin-right: 8px;
       padding: 8px 12px;
       border: none;
       border-radius: 6px;
       cursor: pointer;
+      background: #333;
+      color: #eee;
+    }
+    input {
+      width: 70px;
     }
     #status {
-      margin-top: 10px;
+      margin-top: 8px;
       font-size: 14px;
       color: #bbb;
+    }
+    iframe {
+      width: 100%;
+      max-width: 1000px;
+      height: 600px;
+      border: 1px solid #444;
+      border-radius: 8px;
+      background: #fff;
     }
   </style>
 </head>
 <body>
-  <div class="card">
-    <div>
-      <button id="startBtn">Start</button>
-      <button id="stopBtn" disabled>Stop</button>
-      <label>
-        Interval (s):
-        <input id="intervalSec" type="number" min="5" step="5" value="60" />
-      </label>
-    </div>
+  <div class="controls">
+    <button id="startBtn">Start</button>
+    <button id="stopBtn" disabled>Stop</button>
+    <label>
+      Interval (s):
+      <input id="intervalSec" type="number" min="5" step="5" value="30" />
+    </label>
     <div id="status">Status: idle</div>
   </div>
 
+  <!-- This will display your GitHub profile -->
+  <iframe id="hiddenFrame"></iframe>
+
   <script>
-    const proxyUrl = "/api/proxy"; // this calls your serverless proxy
+    const proxyUrl = "/api/proxy"; // backend proxy to GitHub
     let timer = null;
 
     function setStatus(text) {
@@ -62,7 +76,8 @@
           if (!r.ok) throw new Error("HTTP " + r.status);
           return r.text();
         })
-        .then(() => {
+        .then(html => {
+          document.getElementById("hiddenFrame").srcdoc = html;
           setStatus("last load OK @ " + new Date().toLocaleTimeString());
         })
         .catch(err => {
@@ -71,7 +86,7 @@
     }
 
     function startReloading() {
-      const sec = Math.max(5, Number(document.getElementById("intervalSec").value) || 60);
+      const sec = Math.max(5, Number(document.getElementById("intervalSec").value) || 30);
       loadOnce();
       timer = setInterval(loadOnce, sec * 1000);
       document.getElementById("startBtn").disabled = true;
