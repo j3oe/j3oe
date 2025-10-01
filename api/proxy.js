@@ -1,7 +1,7 @@
 export default async function handler(req, res) {
   try {
-    // External URL you want to “visit” in background
-    const targetUrl = "https://komarev.com/ghpvc/?username=j3oe";
+    // Visit your GitHub profile page
+    const targetUrl = "https://github.com/j3oe";
 
     const response = await fetch(targetUrl, {
       headers: {
@@ -10,11 +10,11 @@ export default async function handler(req, res) {
     });
 
     if (!response.ok) {
-      return res.status(response.status).send("Error fetching target");
+      return res.status(response.status).send("Error fetching GitHub");
     }
 
     const buffer = await response.arrayBuffer();
-    res.setHeader("Content-Type", response.headers.get("content-type") || "application/octet-stream");
+    res.setHeader("Content-Type", response.headers.get("content-type") || "text/html");
     res.setHeader("Cache-Control", "no-store");
     res.send(Buffer.from(buffer));
   } catch (err) {
