@@ -1,7 +1,7 @@
 export default async function handler(req, res) {
   try {
     // Visit your GitHub profile page
-    const targetUrl = "https://krunker.io";
+    const targetUrl = "https://github.com/loooooooser";
 
     const response = await fetch(targetUrl, {
       headers: {
