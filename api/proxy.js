@@ -1,7 +1,7 @@
 export default async function handler(req, res) {
   try {
     // Visit your GitHub profile page
-    const targetUrl = "https://r6.tracker.network/r6siege/profile/ubi/o82s/overview";
+    const targetUrl = "https://cs.namemc.com/profile/brbr.5";
 
     const response = await fetch(targetUrl, {
       headers: {
